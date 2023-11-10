@@ -2,6 +2,8 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$redis = include __DIR__ . '/redis.php';
+$RabbitMQConfig = include __DIR__ . '/rabbitmq.php';
 
 $config = [
     'id' => 'basic',
@@ -15,10 +17,23 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'iIreDTz6BdVZQhBiJeX0vxKDj9wXHdvw',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
+        'response' => [
+            'format' => \yii\web\Response::FORMAT_JSON,
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG, // используем "pretty" в режиме отладки
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
+            ],
         ],
+        'cache' => $redis['cache'],
+        'redis' => $redis['redis'],
+        'queueFile' => $RabbitMQConfig('queueFile', 2, 60),
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
@@ -42,14 +57,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
+            'baseUrl' => 'api',
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            // 'enableStrictParsing' => true,
+            // 'showScriptName' => false,
             'rules' => [
+                // Мб в nginx перенести
+                'api/<url:.+>' => '<url>',
+                // [
+                //     'class' => 'yii\rest\UrlRule',
+                // ]
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
@@ -60,7 +80,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['172.26.0.6', '127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';

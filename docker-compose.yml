@@ -24,6 +24,8 @@ services:
             DB_DSN: '${DB_DSN:-postgres:host=db.local;dbname=test}'
             DB_USER: '${DB_USER:-test}'
             DB_PASSWORD: '${DB_PASSWORD:-test}'
+            REDIS_HOST: 'redis.local'
+            REDIS_PORT: '${FORWARD_REDIS_PORT:-6379}'
         networks:
             - containers
         depends_on:
