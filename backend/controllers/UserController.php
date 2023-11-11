@@ -2,9 +2,7 @@
 
 namespace app\controllers;
 
-use Yii;
-use app\models\User;
-use yii\web\Response;
+use app\models\UserCollection;
 use yii\rest\ViewAction;
 use yii\rest\IndexAction;
 use yii\rest\CreateAction;
@@ -16,7 +14,7 @@ use yii\filters\AccessControl;
 
 class UserController extends ActiveController
 {
-    public $modelClass = User::class;
+    public $modelClass = UserCollection::class;
 
     public function actions()
     {

@@ -13,7 +13,7 @@ class m231111_000001_create_news_table extends Migration
             'description' => $this->text()->notNull(),
             'tags' => $this->json()->notNull()->defaultExpression("'[]'::jsonb"),
             'is_draft' => $this->boolean()->notNull()->defaultValue(false),
-            'user_id' => $this->integer()->notNull(),
+            'author_id' => $this->integer()->notNull(),
             'views' => $this->integer()->notNull()->defaultValue(0),
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
@@ -27,9 +27,9 @@ class m231111_000001_create_news_table extends Migration
             LANGUAGE 'plpgsql' IMMUTABLE
             AS \$function\$
             BEGIN
-                RETURN (setweight(to_tsvector(title)),'A') ||
+                RETURN setweight(to_tsvector(title), 'A') ||
                     setweight(jsonb_to_tsvector(tags, '"all"'), 'B') ||
-                    setweight(to_tsvector(description),'C');
+                    setweight(to_tsvector(description), 'C');
             END
             \$function\$;
         SQL);

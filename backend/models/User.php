@@ -9,7 +9,7 @@ use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * Модель пользователя.
+ * Модель пользователя для авторизации.
  *
  * @property integer $id
  * @property string $phone Авторизация по телефону
@@ -33,12 +33,16 @@ class User extends ActiveRecord implements IdentityInterface
         return 'user';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fields()
     {
-        return ['id', 'name'];
+        return [
+            'id',
+            'name',
+            'phone',
+            'email',
+            'created_at',
+            'updated_at',
+        ];
     }
 
     /**
@@ -70,16 +74,6 @@ class User extends ActiveRecord implements IdentityInterface
             [['email'], 'default', 'value' => null],
             [['email'], 'unique'],
             [['email'], 'email'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'name' => 'Имя пользователя',
         ];
     }
 

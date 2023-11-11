@@ -32,6 +32,10 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * Залогиниться
+     * Авторизация через токен в куках
+     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -45,12 +49,18 @@ class SiteController extends Controller
         throw new BadRequestHttpException();
     }
 
+    /**
+     * Выйти
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
         return 1;
     }
 
+    /**
+     * Текущий залогиненый пользователь
+     */
     public function actionMe()
     {
         return Yii::$app->user->identity;
