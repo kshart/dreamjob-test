@@ -8,7 +8,7 @@ export interface Me {
 }
 
 const meInternal = (): Promise<Me> => {
-  return fetch('/api/user/me')
+  return fetch('/api/site/me')
     .then(response => {
       if (!response.ok) {
         return null
@@ -34,7 +34,7 @@ export default {
    * Авторизация через токен в куках
    */
   login (phone: string, password: string) {
-    return fetch('/api/user/login', {
+    return fetch('/api/site/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default {
    * Выйти
    */
   logout (): Promise<boolean> {
-    return fetch('/api/user/logout', {
+    return fetch('/api/site/logout', {
       method: 'POST',
     })
       .then(({ ok }) => {

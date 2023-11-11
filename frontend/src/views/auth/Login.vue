@@ -2,7 +2,7 @@
   <div>
     <v-text-field
       v-model="phone"
-      label="Phone"
+      label="Телефон"
       placeholder="+78005553535"
       type="text"
     />
@@ -12,8 +12,8 @@
       :rules="[rules.required, rules.min]"
       :type="showPassword ? 'text' : 'password'"
       name="input-10-1"
-      label="Password"
-      hint="At least 4 characters"
+      label="Пароль"
+      hint="Минимум 5 символов"
       counter
       @click:append="showPassword = !showPassword"
     />
@@ -22,7 +22,7 @@
       color="primary"
       @click="login"
     >
-      Login
+      Войти
     </v-btn>
   </div>
 </template>
@@ -38,14 +38,14 @@ export default defineComponent({
       password: '',
       showPassword: false,
       rules: {
-        required: (value: string) => !!value || 'Required.',
-        min: (value: string) => value.length >= 4 || 'Min 4 characters',
+        required: (value: string) => !!value || 'Объязательное поле.',
+        min: (value: string) => value.length >= 5 || 'Минимум 5 символов',
       },
     }
   },
   methods: {
     login () {
-      Api.user.login(this.phone, this.password)
+      Api.site.login(this.phone, this.password)
         .then(() => this.$router.push('/'))
     },
   }

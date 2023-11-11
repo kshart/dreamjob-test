@@ -28,7 +28,7 @@
     <template v-slot:append>
       <div class="pa-2">
         <v-btn block @click="logout">
-          Logout
+          Выход
         </v-btn>
       </div>
     </template>
@@ -64,7 +64,7 @@
       <div>john@google.com</div>
       <div class="pa-2">
         <v-btn block color="primary" @click="logout">
-          Logout
+          Выход
         </v-btn>
       </div>
     </v-sheet>
@@ -73,7 +73,7 @@
 
 <script lang="ts">
 import Api from '@/api'
-import { Me } from '@/api/user'
+import { Me } from '@/api/site'
 import { defineComponent } from 'vue'
 import { VBottomSheet } from 'vuetify/labs/VBottomSheet'
 
@@ -90,11 +90,11 @@ export default defineComponent({
       links: [
         {
           icon: 'mdi-calendar-check-outline',
-          title: 'News',
+          title: 'Новости',
           to: '/news',
         }, {
           icon: 'mdi-account-box-multiple-outline',
-          title: 'Users',
+          title: 'Пользователи',
           to: '/users',
         },
       ],
@@ -105,7 +105,7 @@ export default defineComponent({
   },
   methods: {
     logout () {
-      Api.user.logout()
+      Api.site.logout()
         .finally(() => {
           window.location.reload()
         })

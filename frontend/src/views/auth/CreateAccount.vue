@@ -2,13 +2,13 @@
   <div>
     <v-text-field
       v-model="phone"
-      label="Phone"
+      label="Телефон"
       placeholder="+78005553535"
       type="text"
     />
     <v-text-field
       v-model="name"
-      label="Username"
+      label="Имя"
       placeholder="John Doe"
       type="text"
     />
@@ -17,8 +17,8 @@
       :rules="[rules.required, rules.min]"
       type="text"
       name="input-10-1"
-      label="Password"
-      hint="At least 4 characters"
+      label="Пароль"
+      hint="Минимум 5 символов"
       counter
     />
     <v-btn
@@ -26,7 +26,7 @@
       color="primary"
       @click="userCreate"
     >
-      Create account
+      Создать аккаунт
     </v-btn>
   </div>
 </template>
@@ -43,8 +43,8 @@ export default defineComponent({
       password: '',
       showPassword: false,
       rules: {
-        required: (value: string) => !!value || 'Required.',
-        min: (value: string) => value.length >= 4 || 'Min 4 characters',
+        required: (value: string) => !!value || 'Объязательное поле.',
+        min: (value: string) => value.length >= 4 || 'Минимум 5 символов',
       },
     }
   },

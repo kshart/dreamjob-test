@@ -7,7 +7,7 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script>
-      window.meResolve = fetch('/api/user/me')
+      window.meResolve = fetch('/api/site/me')
         .then(response => {
           if (!response.ok) {
             return null

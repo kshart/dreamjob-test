@@ -25,13 +25,13 @@
       <v-btn
         :active="mobilePanel === 'CreateAccount'"
         prependIcon="mdi-account-plus"
-        text="Create user"
+        text="Создать аккаунт"
         @click="mobilePanel = 'CreateAccount'"
       />
       <v-btn
         :active="mobilePanel === 'Login'"
         prependIcon="mdi-login"
-        text="Login"
+        text="Войти"
         @click="mobilePanel = 'Login'"
       />
     </v-bottom-navigation>

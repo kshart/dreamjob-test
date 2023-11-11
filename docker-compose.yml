@@ -26,6 +26,8 @@ services:
             DB_PASSWORD: '${DB_PASSWORD:-user}'
             REDIS_HOST: 'redis.local'
             REDIS_PORT: '${FORWARD_REDIS_PORT:-6379}'
+            YII_DEBUG: false
+            YII_ENV: 'prod'
         networks:
             - containers
         depends_on:

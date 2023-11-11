@@ -32,10 +32,10 @@ const routes: RouteRecordRaw[] = [
   }, {
     path: '/login',
     name: 'login',
-    component: Auth
+    component: Auth,
   }, {
     path: '/:catchAll(.*)',
-    component: Http404
+    component: Http404,
   },
 ]
 
@@ -47,7 +47,7 @@ const router = createRouter({
 router.beforeEach(async to => {
   let me
   try {
-    me = await Api.user.me()
+    me = await Api.site.me()
   } catch (error) {
     console.error(error)
   }

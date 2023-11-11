@@ -3,7 +3,7 @@
     <v-text-field
       prepend-inner-icon="mdi-magnify"
       v-model="fts"
-      label="Search"
+      label="Поиск"
       :loading="loading"
       single-line
       hide-details
@@ -13,19 +13,17 @@
     />
   </v-app-bar>
   <v-main class="bg-grey-lighten-3">
-    <v-container class="py-8 px-6" fluid>
-      <VInfiniteScroll class="w-100 bg-grey-lighten-3" @load="pullList">
-        <v-row>
-          <v-col
-            v-for="news of newsList"
-            :key="news.id"
-            cols="12"
-          >
-            <NewsItem :news="news" />
-          </v-col>
-        </v-row>
+    <v-container class="py-2 px-6" fluid>
+      <VInfiniteScroll class="bg-grey-lighten-3" @load="pullList">
+        <div
+          v-for="news of newsList"
+          :key="news.id"
+          class="py-3"
+        >
+          <NewsItem :news="news" />
+        </div>
         <template #empty>
-          Loaded {{ newsList.length }} news
+          Загружено {{ newsList.length }} новостей
         </template>
       </VInfiniteScroll>
       <v-layout v-if="$vuetify.display.mobile" justify-center>

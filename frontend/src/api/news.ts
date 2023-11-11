@@ -65,7 +65,16 @@ export default {
   },
   search (fts: string, page: number, perPage: number): Promise<Paginator<NewsWithUser>> {
     return fetch(`/api/news/search?fts=${encodeURIComponent(fts)}&page=${page}&limit=${perPage}`)
-      .then(response => response.json())
+      .then(async (response) => {
+        return {
+          data: await response.json(),
+          users: [],
+          page: Number(response.headers.get('x-pagination-current-page')),
+          perPage: Number(response.headers.get('x-pagination-per-page')),
+          total: Number(response.headers.get('x-pagination-total-count')),
+          totalPages: Number(response.headers.get('x-pagination-page-count')),
+        }
+      })
       .then((paginator: PaginatorNews) => {
         const usersMap = new Map<number, User>()
         for (const user of paginator.users) {

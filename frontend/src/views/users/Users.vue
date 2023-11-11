@@ -1,38 +1,31 @@
 <template>
   <v-main class="h-100 bg-grey-lighten-3" scrollable>
     <v-container class="py-8 px-6" fluid>
-      <VSkeletonLoader
-        :loading="loading"
-        height="240"
-        type="card, list-item"
-        class="w-100"
-      >
-        <VInfiniteScroll class="w-100 bg-grey-lighten-3" @load="load">
-          <v-card
-            v-for="user in users"
-            class="mb-5 bg-white"
-            :key="user.id"
-            :title="user.name"
-            :subtitle="`#${user.id}`"
-            variant="elevated"
-          >
-            <v-card-text>
-              <v-list-item
-                density="compact"
-                prepend-icon="mdi-phone"
-              >
-                <v-list-item-subtitle>{{ user.phone }}</v-list-item-subtitle>
-              </v-list-item>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn-group>
-                <v-btn>set admin</v-btn>
-                <v-btn>delete</v-btn>
-              </v-btn-group>
-            </v-card-actions>
-          </v-card>
-        </VInfiniteScroll>
-      </VSkeletonLoader>
+      <VInfiniteScroll class="w-100 bg-grey-lighten-3" @load="load">
+        <v-card
+          v-for="user in users"
+          class="mb-5 bg-white"
+          :key="user.id"
+          :title="user.name"
+          :subtitle="`#${user.id}`"
+          variant="elevated"
+        >
+          <v-card-text>
+            <v-list-item
+              density="compact"
+              prepend-icon="mdi-phone"
+            >
+              <v-list-item-subtitle>{{ user.phone }}</v-list-item-subtitle>
+            </v-list-item>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn-group>
+              <v-btn>set admin</v-btn>
+              <v-btn>delete</v-btn>
+            </v-btn-group>
+          </v-card-actions>
+        </v-card>
+      </VInfiniteScroll>
     </v-container>
   </v-main>
 </template>
@@ -41,12 +34,10 @@
 import { defineComponent } from 'vue'
 import Api from '@/api'
 import { User } from '@/api/user'
-import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 import { VInfiniteScroll } from 'vuetify/labs/VInfiniteScroll'
 
 export default defineComponent({
   components: {
-    VSkeletonLoader,
     VInfiniteScroll,
   },
   data () {
