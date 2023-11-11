@@ -15,8 +15,10 @@ $config = [
     ],
     'components' => [
         'request' => [
+            'baseUrl' => '/api',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'iIreDTz6BdVZQhBiJeX0vxKDj9wXHdvw',
+            'enableCsrfValidation' => false,
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
@@ -37,7 +39,9 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => true,
         ],
+        'session' => ['class' => yii\redis\Session::class],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -58,16 +62,10 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
-            'baseUrl' => 'api',
             'enablePrettyUrl' => true,
             // 'enableStrictParsing' => true,
-            // 'showScriptName' => false,
+            'showScriptName' => false,
             'rules' => [
-                // Мб в nginx перенести
-                'api/<url:.+>' => '<url>',
-                // [
-                //     'class' => 'yii\rest\UrlRule',
-                // ]
             ],
         ],
     ],

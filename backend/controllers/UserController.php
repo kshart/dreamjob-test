@@ -3,15 +3,50 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
+use app\models\User;
 use yii\web\Response;
+use yii\rest\ViewAction;
+use yii\rest\IndexAction;
+use yii\rest\CreateAction;
+use yii\rest\DeleteAction;
+use yii\rest\OptionsAction;
+use yii\rest\ActiveController;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use yii\filters\AccessControl;
 
-class UserController extends Controller
+class UserController extends ActiveController
 {
+    public $modelClass = User::class;
+
+    public function actions()
+    {
+        return [
+            'index' => [
+                'class' => IndexAction::class,
+                'modelClass' => $this->modelClass,
+            ],
+            'view' => [
+                'class' => ViewAction::class,
+                'modelClass' => $this->modelClass,
+            ],
+            'create' => [
+                'class' => CreateAction::class,
+                'modelClass' => $this->modelClass,
+                'scenario' => $this->createScenario,
+            ],
+            'update' => [
+                'class' => UpdateAction::class,
+                'modelClass' => $this->modelClass,
+                'scenario' => $this->updateScenario,
+            ],
+            'delete' => [
+                'class' => DeleteAction::class,
+                'modelClass' => $this->modelClass,
+            ],
+            'options' => ['class' => OptionsAction::class],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -43,8 +78,8 @@ class UserController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return 'оно';
-    }
+    // public function actionIndex()
+    // {
+    //     return 'ytоно';
+    // }
 }

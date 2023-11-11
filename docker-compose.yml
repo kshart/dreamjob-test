@@ -21,9 +21,9 @@ services:
             - ./backend:/app:delegated
         environment:
             WWWUSER: '${WWWUSER}'
-            DB_DSN: '${DB_DSN:-postgres:host=db.local;dbname=test}'
-            DB_USER: '${DB_USER:-test}'
-            DB_PASSWORD: '${DB_PASSWORD:-test}'
+            DB_DSN: '${DB_DSN:-pgsql:host=db.local;dbname=test}'
+            DB_USERNAME: '${DB_USERNAME:-user}'
+            DB_PASSWORD: '${DB_PASSWORD:-user}'
             REDIS_HOST: 'redis.local'
             REDIS_PORT: '${FORWARD_REDIS_PORT:-6379}'
         networks:
