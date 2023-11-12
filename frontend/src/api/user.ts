@@ -1,12 +1,5 @@
 import { Paginator } from './types'
 
-interface CreateUser {
-  name: string
-  phone: string
-  password: string
-  email?: string
-}
-
 export interface User {
   id: number
   name: string
@@ -18,25 +11,6 @@ export interface User {
 }
 
 export default {
-  create (fields: CreateUser) {
-    return fetch('/api/user/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(fields)
-    })
-      .then(({ ok, body }) => {
-        if (!ok) {
-          return null
-        }
-        return body
-      })
-      .catch(error => {
-        console.error(error)
-        return null
-      })
-  },
   index (page: number, perPage: number): Promise<Paginator<User>> {
     return fetch(`/api/user/index?page=${page}&limit=${perPage}`)
       .then(async (response) => {

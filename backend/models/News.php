@@ -18,11 +18,13 @@ use app\models\User;
  * @property string $title
  * @property string $description
  * @property string[] $tags
- * @property boolean $is_draft
+ * @property boolean $is_draft Новость в черновиках
  * @property integer $author_id
  * @property integer $views
- * @property integer $created_at
- * @property integer $updated_at
+ * @property string $created_at
+ * @property string $updated_at
+ *
+ * @property User $author
  */
 class News extends ActiveRecord
 {
@@ -65,5 +67,13 @@ class News extends ActiveRecord
             $this->author_id = Yii::$app->user->id;
         }
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::class, ['id' => 'author_id']);
     }
 }

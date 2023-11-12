@@ -42,7 +42,7 @@
       <v-layout v-else justify-center>
         <v-dialog
           v-model="showCreateNews"
-          width="500"
+          width="1100"
         >
           <Creator
             @close="showCreateNews = false"
@@ -103,7 +103,7 @@ export default defineComponent({
       pullConfig: {
         key: +new Date(),
         fts: '',
-      }
+      },
     }
   },
   beforeRouteEnter (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {

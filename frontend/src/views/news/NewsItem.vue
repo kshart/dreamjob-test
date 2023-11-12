@@ -4,10 +4,10 @@
       {{ news.title }}
     </v-card-title>
     <v-card-subtitle>
-      12.11.2023 {{ news.user ? news.user.name : news.author_id }}
+      {{ news.created_at }} {{ news.user ? news.user.name : news.author_id }}
     </v-card-subtitle>
     <v-card-item>
-      {{ news.description }}
+      <MdPreview :modelValue="news.description" />
     </v-card-item>
   </v-card>
 </template>
@@ -17,20 +17,14 @@
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { News } from '@/api/news'
+import { MdPreview } from 'md-editor-v3'
 
 export default defineComponent({
+  components: {
+    MdPreview,
+  },
   props: {
     news: Object as PropType<News>,
   },
-  methods: {
-    create () {
-      // Api.news.create({
-      //   title: this.title,
-      //   description: this.description,
-      //   stage: this.stage,
-      //   isPrivate: this.isPrivate,
-      // })
-    },
-  }
 })
 </script>

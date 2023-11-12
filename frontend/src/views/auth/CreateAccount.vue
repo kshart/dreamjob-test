@@ -24,7 +24,7 @@
     <v-btn
       variant="flat"
       color="primary"
-      @click="userCreate"
+      @click="createUser"
     >
       Создать аккаунт
     </v-btn>
@@ -49,12 +49,14 @@ export default defineComponent({
     }
   },
   methods: {
-    userCreate () {
-      Api.user.create({
+    createUser () {
+      Api.site.createUser({
         name: this.name,
         phone: this.phone,
         password: this.password,
       })
+        .then(() => Api.site.login(this.phone, this.password))
+        .then(() => this.$router.push('/'))
     },
   }
 })

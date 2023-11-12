@@ -15,7 +15,6 @@ use yii\behaviors\TimestampBehavior;
  * @property string $phone Авторизация по телефону
  * @property string $name Имя пользователя
  * @property string $password_hash
- * @property string $email
  * @property string $auth_key
  * @property integer $created_at
  * @property integer $updated_at
@@ -39,7 +38,6 @@ class User extends ActiveRecord implements IdentityInterface
             'id',
             'name',
             'phone',
-            'email',
             'created_at',
             'updated_at',
         ];
@@ -64,16 +62,13 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'phone'], 'default', 'value' => null],
+            [['phone'], 'default', 'value' => null],
             [['new_password'], 'string', 'min' => 5],
             [['new_password'], 'setPasswordHash'],
             [['auth_key'], 'string', 'max' => 32],
             [['name', 'auth_key'], 'required'],
-            [['name', 'password_hash', 'email'], 'string', 'max' => 255],
+            [['name', 'password_hash'], 'string', 'max' => 255],
             [['name'], 'unique'],
-            [['email'], 'default', 'value' => null],
-            [['email'], 'unique'],
-            [['email'], 'email'],
         ];
     }
 

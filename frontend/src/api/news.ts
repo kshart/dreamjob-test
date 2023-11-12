@@ -2,6 +2,7 @@ import { Paginator } from './types'
 import { User } from './user'
 
 interface CreateNews {
+  slug: string
   title: string
   is_draft: boolean
   description: string
@@ -14,26 +15,25 @@ interface UpdateNews {
 
 export interface News {
   id: number
+  slug: string
   /**
-   * Название задачи
+   * Название новости
    */
   title: string
   /**
-   * Описание Задачи
+   * Описание в md формате
    */
   description: string
   /**
-   * Задачу видит только владелец
+   * Новость видит только владелец
    */
   is_draft: boolean
   /**
-   * Владелец задачи
+   * Владелец новости
    */
   author_id: number
   created_at: string
   updated_at: string
-
-  can_edit: boolean
 }
 
 interface PaginatorNews extends Paginator<News> {
@@ -54,6 +54,7 @@ export default {
     })
       .then(response => {
         if (!response.ok) {
+          response.json()
           return null
         }
         return response.json()

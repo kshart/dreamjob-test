@@ -11,15 +11,7 @@ use yii\behaviors\TimestampBehavior;
 /**
  * Модель пользователя для списка пользователей.
  *
- * @property integer $id
- * @property string $phone Авторизация по телефону
- * @property string $name Имя пользователя
- * @property string $password_hash
- * @property string $email
- * @property string $auth_key
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property News[] $newsList
  */
 class UserCollection extends User
 {
@@ -29,5 +21,13 @@ class UserCollection extends User
             'id',
             'name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNewsList()
+    {
+        return $this->hasMany(News::class, ['author_id' => 'id']);
     }
 }

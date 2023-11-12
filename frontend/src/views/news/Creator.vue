@@ -1,26 +1,27 @@
 <template>
   <v-card :loading="loading">
-    <v-card-title>Create news</v-card-title>
+    <v-card-title>Новая новость</v-card-title>
     <v-card-item>
       <v-form ref="form">
         <v-text-field
+          v-model="slug"
+          :rules="slugRules"
+          label="slug"
+        />
+        <v-text-field
           v-model="title"
           :rules="titleRules"
-          label="Title"
+          label="Заголовок"
         />
-        <v-textarea
-          v-model="description"
-          :rules="descriptionRules"
-          label="Description"
-        />
+        <MdEditor v-model="description" language="ru" />
         <v-checkbox v-model="isDraft" label="Черновик" />
       </v-form>
     </v-card-item>
     <v-card-actions>
       <v-list-item class="w-100">
         <template v-slot:append>
-          <v-btn size="large" @click="$emit('close')">Close</v-btn>
-          <v-btn size="large" color="primary" variant="elevated" @click="create">Create</v-btn>
+          <v-btn size="large" @click="$emit('close')">Отмена</v-btn>
+          <v-btn size="large" color="primary" variant="elevated" @click="create">Создать</v-btn>
         </template>
       </v-list-item>
     </v-card-actions>
@@ -30,14 +31,29 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Api from '@/api'
+import { MdEditor, config } from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
+import ru from '@vavt/cm-extension/dist/locale/ru'
 
+config({
+  editorConfig: {
+    languageUserDefined: {
+      ru
+    }
+  }
+})
 export default defineComponent({
+  components: {
+    MdEditor,
+  },
   data () {
     return {
       loading: false,
+      slug: '',
       title: '',
       description: '',
-      isDraft: false,
+      isDraft: true,
+      slugRules: [(v: string) => !!v || 'Slug is required'],
       titleRules: [(v: string) => !!v || 'Title is required'],
       descriptionRules: [(v: string) => !!v || 'Description is required'],
     }
@@ -52,13 +68,15 @@ export default defineComponent({
       if (valid) {
         this.loading = true
         const model = await Api.news.create({
+          slug: this.slug,
           title: this.title,
           description: this.description,
           is_draft: this.isDraft,
         })
-        model.can_edit = true
         this.loading = false
-        this.$emit('created', model)
+        if (model) {
+          this.$emit('created', model)
+        }
       }
     },
   }

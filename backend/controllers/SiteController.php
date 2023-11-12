@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use Yii;
+use Exception;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\BadRequestHttpException;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -19,7 +21,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login'],
+                        'actions' => ['login', 'create-user'],
                         'roles' => ['?'],
                     ], [
                         'allow' => true,
@@ -64,5 +66,30 @@ class SiteController extends Controller
     public function actionMe()
     {
         return Yii::$app->user->identity;
+    }
+
+    /**
+     * Создать пользователя и залогинится под ним
+     */
+    public function actionCreateUser()
+    {
+        $model = new User();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $fields = Yii::$app->request->post();
+            $model->load($fields, '');
+            $model->generateAuthKey();
+            $model->setPassword($fields['password']);
+            if (!$model->save()) {
+                $transaction->rollBack();
+                $message = implode(',', $model->getErrorSummary(true));
+                throw new BadRequestHttpException($message);
+            }
+            $transaction->commit();
+            return $model;
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 }

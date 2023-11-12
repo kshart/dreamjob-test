@@ -7,6 +7,13 @@ export interface Me {
   updated_at: string
 }
 
+interface CreateUser {
+  name: string
+  phone: string
+  password: string
+  email?: string
+}
+
 const meInternal = (): Promise<Me> => {
   return fetch('/api/site/me')
     .then(response => {
@@ -74,6 +81,30 @@ export default {
       .catch(error => {
         console.error(error)
         return false
+      })
+  },
+
+  /**
+   * Создать пользователя
+   */
+  createUser (fields: CreateUser) {
+    return fetch('/api/site/create-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(fields)
+    })
+      .then(response => {
+        if (!response.ok) {
+          response.json()
+          return null
+        }
+        return response.json()
+      })
+      .catch(error => {
+        console.error(error)
+        return null
       })
   },
 }

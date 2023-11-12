@@ -2,11 +2,16 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$redis = include __DIR__ . '/redis.php';
+$RabbitMQConfig = include __DIR__ . '/rabbitmq.php';
 
 $config = [
     'id' => 'dreamjob-test',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'queueNews',
+    ],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -14,9 +19,9 @@ $config = [
         '@tests' => '@app/tests',
     ],
     'components' => [
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+        'cache' => $redis['cache'],
+        'redis' => $redis['redis'],
+        'queueNews' => $RabbitMQConfig('queueNews', 2, 60),
         'log' => [
             'targets' => [
                 [
