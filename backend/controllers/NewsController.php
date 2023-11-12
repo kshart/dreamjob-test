@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\ForbiddenHttpException;
 use yii\rest\ViewAction;
 use yii\rest\CreateAction;
 use yii\rest\DeleteAction;
@@ -56,6 +57,7 @@ class NewsController extends ActiveController
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => fn ($rule, $action) => throw new ForbiddenHttpException(),
             ],
         ];
     }

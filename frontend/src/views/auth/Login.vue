@@ -24,6 +24,12 @@
     >
       Войти
     </v-btn>
+    <v-snackbar
+      v-model="hasLoginError"
+      :timeout="1000"
+    >
+      Ошибка
+    </v-snackbar>
   </div>
 </template>
 
@@ -41,12 +47,19 @@ export default defineComponent({
         required: (value: string) => !!value || 'Объязательное поле.',
         min: (value: string) => value.length >= 5 || 'Минимум 5 символов',
       },
+      hasLoginError: false,
     }
   },
   methods: {
     login () {
       Api.site.login(this.phone, this.password)
-        .then(() => this.$router.push('/'))
+        .then(() => {
+          window.location.reload()
+        })
+        .catch(err => {
+          console.error(err)
+          this.hasLoginError = true
+        })
     },
   }
 })

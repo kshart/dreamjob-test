@@ -51,16 +51,13 @@ export default {
         password,
       })
     })
-      .then(({ ok, body }) => {
-        if (!ok) {
-          return null
+      .then(async response => {
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data?.message)
         }
         (window as any).meResolve = meInternal()
-        return body
-      })
-      .catch(error => {
-        console.error(error)
-        return null
+        return data
       })
   },
 

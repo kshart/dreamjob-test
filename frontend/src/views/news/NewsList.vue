@@ -51,22 +51,24 @@
         </v-dialog>
       </v-layout>
     </v-container>
-    <div v-if="$vuetify.display.mobile" class="pr-3 bottom-btn">
-      <v-btn
-        size="large"
-        icon="mdi-plus"
-        color="primary"
-        @click="showCreateNews = true"
-      />
-    </div>
-    <div v-else class="pr-5 bottom-btn">
-      <v-btn
-        size="x-large"
-        icon="mdi-plus"
-        color="primary"
-        @click="showCreateNews = true"
-      />
-    </div>
+    <template v-if="canCreateNews">
+      <div v-if="$vuetify.display.mobile" class="pr-3 bottom-btn">
+        <v-btn
+          size="large"
+          icon="mdi-plus"
+          color="primary"
+          @click="showCreateNews = true"
+        />
+      </div>
+      <div v-else class="pr-5 bottom-btn">
+        <v-btn
+          size="x-large"
+          icon="mdi-plus"
+          color="primary"
+          @click="showCreateNews = true"
+        />
+      </div>
+    </template>
   </v-main>
 </template>
 
@@ -92,6 +94,7 @@ export default defineComponent({
   },
   data () {
     return {
+      canCreateNews: false,
       showCreateNews: false,
       loading: false,
       page: 1,
@@ -127,6 +130,12 @@ export default defineComponent({
             fts,
           }
         })
+      })
+  },
+  beforeMount () {
+    Api.site.me()
+      .then(me => {
+        this.canCreateNews = !!me
       })
   },
   beforeUnmount () {

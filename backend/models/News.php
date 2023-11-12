@@ -61,6 +61,23 @@ class News extends ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id',
+            'slug',
+            'title',
+            'description',
+            'tags',
+            'is_draft',
+            'author',
+            'author_id',
+            'views',
+            'created_at',
+            'updated_at',
+        ];
+    }
+
     public function beforeSave($insert = true)
     {
         if ($insert) {

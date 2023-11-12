@@ -15,6 +15,7 @@
         />
         <MdEditor v-model="description" language="ru" />
         <v-checkbox v-model="isDraft" label="Черновик" />
+        Черновик не видно другим пользователям
       </v-form>
     </v-card-item>
     <v-card-actions>

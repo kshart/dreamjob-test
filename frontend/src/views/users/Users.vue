@@ -58,6 +58,7 @@ export default defineComponent({
         this.totalPages = paginator.totalPages
         this.users = paginator.data
       })
+      .catch(error => console.error(error))
       .finally(() => {
         this.loading = false
       })

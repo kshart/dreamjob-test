@@ -4,7 +4,7 @@
       {{ news.title }}
     </v-card-title>
     <v-card-subtitle>
-      {{ news.created_at }} {{ news.user ? news.user.name : news.author_id }}
+      {{ news.created_at }} @{{ news.author ? news.author.name : news.author_id }}
     </v-card-subtitle>
     <v-card-item>
       <MdPreview :modelValue="news.description" />

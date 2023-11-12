@@ -117,18 +117,26 @@ export default defineComponent({
       showLoginWindow: false,
       color: '',
       value: '',
-      links: [
+    }
+  },
+  computed: {
+    links () {
+      const result = [
         {
           icon: 'mdi-calendar-check-outline',
           title: 'Новости',
           to: '/news',
-        }, {
+        }
+      ]
+      if (this.me) {
+        result.push({
           icon: 'mdi-account-box-multiple-outline',
           title: 'Пользователи',
           to: '/users',
-        },
-      ],
-    }
+        })
+      }
+      return result
+    },
   },
   beforeMount () {
     this.drawer = !this.$vuetify.display.mobile
@@ -138,9 +146,6 @@ export default defineComponent({
       })
   },
   methods: {
-    login () {
-      console.log('asd')
-    },
     logout () {
       Api.site.logout()
         .finally(() => {
